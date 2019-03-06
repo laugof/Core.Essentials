@@ -4,13 +4,24 @@
 /// </summary>
 namespace Core.Interface
 {
+    public interface IRigidMatrix
+    {
+        IMatrix<double> RotationMatrix { get; }
+        IVector<double> TranslationVector { get; }
+        bool IsIdentity();
+    }
+
     /// <summary>
     /// Reference frame interface
     /// </summary>
     public interface IEuclideanSpace
     {
-        bool Set(IFrame origin, IFrame target, IMatrix<double> rigidMatrix = null);
-        IMatrix<double> Get(IFrame origin, IFrame target);
+        void AddFrame(IFrame frame);
+        void RemoveFrame(IFrame frame);
+        bool AreConnected(IFrame origin, IFrame target);
+        void Set(IFrame origin, IFrame target, IRigidMatrix rigidMatrix = null);
+        IRigidMatrix Get(IFrame origin, IFrame target);
+        void Remove(IFrame origin, IFrame target = null);
     }
 
     /// <summary>
