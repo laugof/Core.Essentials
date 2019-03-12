@@ -34,6 +34,6 @@ namespace Core.Interface
     /// <summary>
     /// Reference frame interface
     /// </summary>
-    public interface IFrame// : IEquatable<IFrame>
+    public interface IFrame
     { }
 }
