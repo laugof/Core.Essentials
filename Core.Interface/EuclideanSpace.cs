@@ -39,7 +39,7 @@ namespace Core.Interface
         void AddFrame(IFrame frame);
 
         /// <summary>
-        /// Remove a frame (node) in the graph
+        /// Remove a frame (node) in the graph and all their connections (edges)
         /// </summary>
         /// <param name="frame">IFrame</param>
         void RemoveFrame(IFrame frame);
