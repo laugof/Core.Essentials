@@ -260,5 +260,20 @@ namespace Core.Algorithm
         }
 
         #endregion Barycenter
+
+        /// <summary>
+        /// Return the cross product: v1 x v2
+        /// </summary>
+        /// <param name="v1">3d vector</param>
+        /// <param name="v2">3d vector</param>
+        public static I3dCartesianCoordinates<double> CrossProduct(I3dCartesianCoordinates<double> v1, I3dCartesianCoordinates<double> v2)
+        {
+            var X = (v1.Y * v2.Z) - (v1.Z * v2.Y);
+            var Y = (v1.Z * v2.X) - (v1.X * v2.Z);
+            var Z = (v1.X * v2.Y) - (v1.Y * v2.X);
+            var p = new Point3d();
+            p.SetCartesian(X, Y, Z);
+            return p;
+        }
     }
 }
