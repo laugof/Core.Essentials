@@ -1,4 +1,5 @@
 ﻿using Core.Interface;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -274,6 +275,37 @@ namespace Core.Algorithm
             var p = new Point3d();
             p.SetCartesian(X, Y, Z);
             return p;
+        }
+
+        /// <summary>
+        /// Dot product (scalar product)
+        /// </summary>
+        /// <param name="A">Vector</param>
+        /// <param name="B">Vector</param>
+        /// <returns>double</returns>
+        public static double DotProduct(IVector<double> A, I3dCartesianCoordinates<double> B)
+        {
+            var length = Math.Max(A.Length, B.Length);
+            double r = 0, a, b;
+            for (int i = 0; i < length; ++i)
+            {
+                a = (i < A.Length) ? A[i] : 0;
+                b = (i < B.Length) ? B[i] : 0;
+                r += a * b;
+            }
+            return r;
+        }
+
+        /// <summary>
+        /// Are the two vectors orthogonal?
+        /// </summary>
+        /// <param name="A">3d vector</param>
+        /// <param name="B">3d vector</param>
+        /// <returns></returns>
+        public static bool Orthogonal(I3dCartesianCoordinates<double> A, I3dCartesianCoordinates<double> B)
+        {
+            const double Epsilon = 1e-6;
+            return Math.Abs(A.X * B.X + A.Y * B.Y + A.Z * B.Z) < Epsilon;
         }
     }
 }
