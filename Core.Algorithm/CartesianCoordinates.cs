@@ -30,10 +30,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="v">Vector</param>
         /// <returns></returns>
-        public static double Norm(I2dCartesianCoordinates<double> v)
-        {
-            return System.Math.Sqrt(Norm2(v));
-        }
+        public static double Norm(I2dCartesianCoordinates<double> v) => Math.Sqrt(Norm2(v));
 
         /// <summary>
         /// Return normalized vector of v
@@ -63,10 +60,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="v">Vector</param>
         /// <returns></returns>
-        public static double Norm(I3dCartesianCoordinates<double> v)
-        {
-            return System.Math.Sqrt(Norm2(v));
-        }
+        public static double Norm(I3dCartesianCoordinates<double> v) => Math.Sqrt(Norm2(v));
 
         /// <summary>
         /// Return normalized vector of v
@@ -91,11 +85,19 @@ namespace Core.Algorithm
         /// <param name="p1">Point1</param>
         /// <param name="p2">Point2</param>
         /// <returns></returns>
-        public static double Distance2(I2dCartesianCoordinates<double> p1, I2dCartesianCoordinates<double> p2)
+        public static double Distance2(IVector<double> p1, IVector<double> p2)
         {
-            var x = p1.X - p2.X;
-            var y = p1.Y - p2.Y;
-            return x * x + y * y;
+            var distance = 0.0;
+            var dimension = p1.Length;
+            if (p2.Length > dimension) dimension = p2.Length;
+            for (int i = 0; i < dimension; ++i)
+            {
+                var a1 = i < p1.Length ? p1[i] : 0.0;
+                var a2 = i < p2.Length ? p2[i] : 0.0;
+                var x = a1 - a2;
+                distance += x * x;
+            }
+            return distance;
         }
 
         /// <summary>
@@ -104,35 +106,7 @@ namespace Core.Algorithm
         /// <param name="p1">Point1</param>
         /// <param name="p2">Point2</param>
         /// <returns></returns>
-        public static double Distance(I2dCartesianCoordinates<double> p1, I2dCartesianCoordinates<double> p2)
-        {
-            return System.Math.Sqrt(Distance2(p1, p2));
-        }
-
-        /// <summary>
-        /// Squared distance between p1 and p2
-        /// </summary>
-        /// <param name="p1">Point1</param>
-        /// <param name="p2">Point2</param>
-        /// <returns></returns>
-        public static double Distance2(I3dCartesianCoordinates<double> p1, I3dCartesianCoordinates<double> p2)
-        {
-            var x = p1.X - p2.X;
-            var y = p1.Y - p2.Y;
-            var z = p1.Z - p2.Z;
-            return x * x + y * y + z * z;
-        }
-
-        /// <summary>
-        /// Distance between p1 and p2
-        /// </summary>
-        /// <param name="p1">Point1</param>
-        /// <param name="p2">Point2</param>
-        /// <returns></returns>
-        public static double Distance(I3dCartesianCoordinates<double> p1, I3dCartesianCoordinates<double> p2)
-        {
-            return System.Math.Sqrt(Distance2(p1, p2));
-        }
+        public static double Distance(IVector<double> p1, IVector<double> p2) => Math.Sqrt(Distance2(p1, p2));
 
         #endregion Distance
 
@@ -283,7 +257,7 @@ namespace Core.Algorithm
         /// <param name="A">Vector</param>
         /// <param name="B">Vector</param>
         /// <returns>double</returns>
-        public static double DotProduct(IVector<double> A, I3dCartesianCoordinates<double> B)
+        public static double DotProduct(IVector<double> A, IVector<double> B)
         {
             var length = Math.Max(A.Length, B.Length);
             double r = 0, a, b;
