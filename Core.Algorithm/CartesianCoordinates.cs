@@ -275,11 +275,11 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="A">3d vector</param>
         /// <param name="B">3d vector</param>
+        /// <param name="epsilon">Tolerance</param>
         /// <returns></returns>
-        public static bool Orthogonal(I3dCartesianCoordinates<double> A, I3dCartesianCoordinates<double> B)
+        public static bool Orthogonal(IVector<double> A, IVector<double> B, double epsilon = 1e-6)
         {
-            const double Epsilon = 1e-6;
-            return Math.Abs(A.X * B.X + A.Y * B.Y + A.Z * B.Z) < Epsilon;
+            return DotProduct(A, B) < epsilon;
         }
     }
 }
