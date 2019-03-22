@@ -16,6 +16,18 @@ namespace Core.Interface
     }
 
     /// <summary>
+    /// 2d vector
+    /// </summary>
+    public interface IVector2d : I2dCartesianCoordinates<double>
+    { }
+
+    /// <summary>
+    /// 2d point
+    /// </summary>
+    public interface IPoint2d : I2dCartesianCoordinates<double>
+    { }
+
+    /// <summary>
     /// 3d cartesian coordinates
     /// </summary>
     public interface I3dCartesianCoordinates<T> : IVector<T>
@@ -27,6 +39,18 @@ namespace Core.Interface
         void SetCartesian(I2dCartesianCoordinates<T> p);
         void SetCartesian(I3dCartesianCoordinates<T> p);
     }
+
+    /// <summary>
+    /// 3d vector
+    /// </summary>
+    public interface IVector3d : I3dCartesianCoordinates<double>
+    { }
+
+    /// <summary>
+    /// 2d point
+    /// </summary>
+    public interface IPoint3d : I3dCartesianCoordinates<double>
+    { }
 
     /// <summary>
     /// Distance with a 3d point

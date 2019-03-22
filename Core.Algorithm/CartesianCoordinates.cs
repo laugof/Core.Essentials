@@ -115,7 +115,7 @@ namespace Core.Algorithm
 
         #region Barycenter
 
-        internal class Point2d : I2dCartesianCoordinates<double>
+        internal class Point2d : IPoint2d
         {
             public double X { get; set; }
             public double Y { get; set; }
@@ -158,7 +158,7 @@ namespace Core.Algorithm
         /// <returns>Center of gravity</returns>
         public static I2dCartesianCoordinates<double> Barycenter(List<I2dCartesianCoordinates<double>> pl)
         {
-            I2dCartesianCoordinates<double> CenterOfGravity = new Point2d();
+            IPoint2d CenterOfGravity = new Point2d();
             foreach (var point in pl)
             {
                 CenterOfGravity.X += point.X;
