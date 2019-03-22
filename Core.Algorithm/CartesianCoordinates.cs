@@ -20,9 +20,12 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="v">Vector</param>
         /// <returns></returns>
-        public static double Norm2(I2dCartesianCoordinates<double> v)
+        public static double Norm2(IVector<double> v)
         {
-            return v.X * v.X + v.Y * v.Y;
+            var norm2 = 0.0;
+            for (int i = 0; i < v.Length; ++i)
+                norm2 += v[i] * v[i];
+            return norm2;
         }
 
         /// <summary>
@@ -30,7 +33,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="v">Vector</param>
         /// <returns></returns>
-        public static double Norm(I2dCartesianCoordinates<double> v) => Math.Sqrt(Norm2(v));
+        public static double Norm(IVector<double> v) => Math.Sqrt(Norm2(v));
 
         /// <summary>
         /// Return normalized vector of v
@@ -237,6 +240,33 @@ namespace Core.Algorithm
         #endregion Barycenter
 
         /// <summary>
+        /// Return the addition: v1 + v2
+        /// </summary>
+        /// <param name="v1">3d vector</param>
+        /// <param name="v2">3d vector</param>
+        public static I3dCartesianCoordinates<double> Add(I3dCartesianCoordinates<double> v1, I3dCartesianCoordinates<double> v2)
+        {
+            var p = new Point3d();
+            p.SetCartesian(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
+            return p;
+        }
+
+        /// <summary>
+        /// Mutiply scalar to Vector
+        /// </summary>
+        /// <param name="scalar"></param>
+        /// <param name="v">Vector</param>
+        /// <returns></returns>
+        public static I3dCartesianCoordinates<double> Multiply(double scalar, I3dCartesianCoordinates<double> v)
+        {
+            var p = new Point3d();
+            p.SetCartesian(scalar * v.X, scalar * v.Y, scalar * v.Z);
+            return p;
+        }
+
+        public static I3dCartesianCoordinates<double> Multiply(I3dCartesianCoordinates<double> v, double scalar) => Multiply(scalar, v);
+
+        /// <summary>
         /// Return the cross product: v1 x v2
         /// </summary>
         /// <param name="v1">3d vector</param>
@@ -268,6 +298,35 @@ namespace Core.Algorithm
                 r += a * b;
             }
             return r;
+        }
+
+        /// <summary>
+        /// Return a vector orthogonal to V
+        /// </summary>
+        /// <param name="V">Vector 3d</param>
+        /// <param name="normalize">Normalize the orthogonal vector?</param>
+        public static I3dCartesianCoordinates<double> Orthogonal(I3dCartesianCoordinates<double> V, bool normalize = true)
+        {
+            var O = new Point3d();
+            var i = 0;
+            if (Math.Abs(V[1]) < Math.Abs(V[0])) i = 1;
+            if (Math.Abs(V[2]) < Math.Abs(V[i])) i = 2;
+            switch (i)
+            {
+                case 0: O.SetCartesian(0.0, -V.Z, V.Y); break;
+                case 1: O.SetCartesian(-V.Z, 0.0, V.X); break;
+                case 2: O.SetCartesian(-V.Y, V.X, 0.0); break;
+                default: break;
+            }
+            if (normalize)
+            {
+                var norm = Norm(O);
+                O.X /= norm;
+                O.Y /= norm;
+                O.Z /= norm;
+            }
+            //Debug.Assert(Core.Mathematics.Utilities.Near(Vector3d.Angle(V, O).Get(Core.Angle.Unit.deg), 90.0, 1e-6));
+            return O;
         }
 
         /// <summary>
