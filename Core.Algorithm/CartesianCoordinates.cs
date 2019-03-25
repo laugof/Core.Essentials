@@ -301,6 +301,14 @@ namespace Core.Algorithm
         }
 
         /// <summary>
+        /// Dot product (scalar product)
+        /// </summary>
+        /// <param name="A">Vector</param>
+        /// <param name="B">Vector</param>
+        /// <returns>double</returns>
+        public static double ScalarProduct(IVector<double> A, IVector<double> B) => DotProduct(A, B);
+
+        /// <summary>
         /// Return a vector orthogonal to V
         /// </summary>
         /// <param name="V">Vector 3d</param>
