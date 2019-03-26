@@ -90,9 +90,10 @@ namespace Core.Algorithm
         /// <returns></returns>
         public static double Distance2(IVector<double> p1, IVector<double> p2)
         {
+            Debug.Assert(p1.Length == p2.Length);
             var distance = 0.0;
             var dimension = p1.Length;
-            if (p2.Length > dimension) dimension = p2.Length;
+            if (p2.Length < dimension) dimension = p2.Length; // FIXME >
             for (int i = 0; i < dimension; ++i)
             {
                 var a1 = i < p1.Length ? p1[i] : 0.0;
