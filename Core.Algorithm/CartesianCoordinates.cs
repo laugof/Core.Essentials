@@ -49,23 +49,6 @@ namespace Core.Algorithm
         }
 
         /// <summary>
-        /// Squared norm of v
-        /// </summary>
-        /// <param name="v">Vector</param>
-        /// <returns></returns>
-        public static double Norm2(I3dCartesianCoordinates<double> v)
-        {
-            return v.X * v.X + v.Y * v.Y + v.Z * v.Z;
-        }
-
-        /// <summary>
-        /// Norm of v
-        /// </summary>
-        /// <param name="v">Vector</param>
-        /// <returns></returns>
-        public static double Norm(I3dCartesianCoordinates<double> v) => Math.Sqrt(Norm2(v));
-
-        /// <summary>
         /// Return normalized vector of v
         /// </summary>
         /// <param name="v">Vector</param>
@@ -92,7 +75,7 @@ namespace Core.Algorithm
         {
             var distance = 0.0;
             var dimension = p1.Length;
-            if (p2.Length > dimension) dimension = p2.Length;
+            if (p2.Length < dimension) dimension = p2.Length;
             for (int i = 0; i < dimension; ++i)
             {
                 var a1 = i < p1.Length ? p1[i] : 0.0;
@@ -238,6 +221,18 @@ namespace Core.Algorithm
         }
 
         #endregion Barycenter
+
+        /// <summary>
+        /// Return if point is on a geometric shape
+        /// </summary>
+        /// <param name="shape">3d geometric shape</param>
+        /// <param name="point">3d point</param>
+        /// <param name="distanceTolerance">Is on the shape if distance is less than tolerance</param>
+        public static bool IsOn(I3dPointDistance<double> shape, I3dCartesianCoordinates<double> point, double distanceTolerance = 1e-6)
+        {
+            var distance = shape.Distance(point);
+            return distance < 0.0 ? false : distance <= distanceTolerance;
+        }
 
         /// <summary>
         /// Return the addition: v1 + v2
