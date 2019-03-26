@@ -36,28 +36,28 @@ namespace Core.Algorithm
         public static double Norm(IVector<double> v) => Math.Sqrt(Norm2(v));
 
         /// <summary>
-        /// Return normalized vector of v
+        /// Return normalized vector of v multiplied by a scalar
         /// </summary>
         /// <param name="v">Vector</param>
         /// <returns></returns>
-        public static I2dCartesianCoordinates<double> Normalize(I2dCartesianCoordinates<double> v)
+        public static I2dCartesianCoordinates<double> Normalize(I2dCartesianCoordinates<double> v, double scalar = 1.0)
         {
             var norm = Norm(v);
             var p = new Point2d();
-            if (norm > 0) p.SetCartesian(v.X / norm, v.Y / norm);
+            if (norm > 0) p.SetCartesian(scalar * v.X / norm, scalar * v.Y / norm);
             return p;
         }
 
         /// <summary>
-        /// Return normalized vector of v
+        /// Return normalized vector of v multiplied by a scalar
         /// </summary>
         /// <param name="v">Vector</param>
         /// <returns></returns>
-        public static I3dCartesianCoordinates<double> Normalize(I3dCartesianCoordinates<double> v)
+        public static I3dCartesianCoordinates<double> Normalize(I3dCartesianCoordinates<double> v, double scalar = 1.0)
         {
             var norm = Norm(v);
             var p = new Point3d();
-            if (norm > 0) p.SetCartesian(v.X / norm, v.Y / norm, v.Z / norm);
+            if (norm > 0) p.SetCartesian(scalar * v.X / norm, scalar * v.Y / norm, scalar * v.Z / norm);
             return p;
         }
 
