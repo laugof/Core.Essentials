@@ -277,6 +277,19 @@ namespace Core.Algorithm
         }
 
         /// <summary>
+        /// Return the cross product: v1 x v2
+        /// </summary>
+        /// <param name="v1">2d vector</param>
+        /// <param name="v2">2d vector</param>
+        public static I3dCartesianCoordinates<double> CrossProduct(I2dCartesianCoordinates<double> v1, I2dCartesianCoordinates<double> v2)
+        {
+            var Z = (v1.X * v2.Y) - (v1.Y * v2.X);
+            var p = new Point3d();
+            p.SetCartesian(0.0, 0.0, Z);
+            return p;
+        }
+
+        /// <summary>
         /// Dot product (scalar product)
         /// </summary>
         /// <param name="A">Vector</param>
@@ -285,14 +298,18 @@ namespace Core.Algorithm
         public static double DotProduct(IVector<double> A, IVector<double> B)
         {
             var length = Math.Max(A.Length, B.Length);
-            double r = 0, a, b;
+            double s1 = 0.0;
             for (int i = 0; i < length; ++i)
             {
-                a = (i < A.Length) ? A[i] : 0;
-                b = (i < B.Length) ? B[i] : 0;
-                r += a * b;
+                var a = (i < A.Length) ? A[i] : 0;
+                var b = (i < B.Length) ? B[i] : 0;
+                s1 += a * b;
             }
-            return r;
+#if DEBUG
+            //var s2 = (A.GetRowMatrix * B.GetColMatrix)[0, 0];
+            //var Zero = s1 - s2;
+#endif //DEBUG
+            return s1;
         }
 
         /// <summary>
