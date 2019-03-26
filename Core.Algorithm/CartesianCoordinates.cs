@@ -36,45 +36,28 @@ namespace Core.Algorithm
         public static double Norm(IVector<double> v) => Math.Sqrt(Norm2(v));
 
         /// <summary>
-        /// Return normalized vector of v
+        /// Return normalized vector of v multiplied by a scalar
         /// </summary>
         /// <param name="v">Vector</param>
         /// <returns></returns>
-        public static I2dCartesianCoordinates<double> Normalize(I2dCartesianCoordinates<double> v)
+        public static I2dCartesianCoordinates<double> Normalize(I2dCartesianCoordinates<double> v, double scalar = 1.0)
         {
             var norm = Norm(v);
             var p = new Point2d();
-            if (norm > 0) p.SetCartesian(v.X / norm, v.Y / norm);
+            if (norm > 0) p.SetCartesian(scalar * v.X / norm, scalar * v.Y / norm);
             return p;
         }
 
         /// <summary>
-        /// Squared norm of v
+        /// Return normalized vector of v multiplied by a scalar
         /// </summary>
         /// <param name="v">Vector</param>
         /// <returns></returns>
-        public static double Norm2(I3dCartesianCoordinates<double> v)
-        {
-            return v.X * v.X + v.Y * v.Y + v.Z * v.Z;
-        }
-
-        /// <summary>
-        /// Norm of v
-        /// </summary>
-        /// <param name="v">Vector</param>
-        /// <returns></returns>
-        public static double Norm(I3dCartesianCoordinates<double> v) => Math.Sqrt(Norm2(v));
-
-        /// <summary>
-        /// Return normalized vector of v
-        /// </summary>
-        /// <param name="v">Vector</param>
-        /// <returns></returns>
-        public static I3dCartesianCoordinates<double> Normalize(I3dCartesianCoordinates<double> v)
+        public static I3dCartesianCoordinates<double> Normalize(I3dCartesianCoordinates<double> v, double scalar = 1.0)
         {
             var norm = Norm(v);
             var p = new Point3d();
-            if (norm > 0) p.SetCartesian(v.X / norm, v.Y / norm, v.Z / norm);
+            if (norm > 0) p.SetCartesian(scalar * v.X / norm, scalar * v.Y / norm, scalar * v.Z / norm);
             return p;
         }
 
@@ -241,6 +224,18 @@ namespace Core.Algorithm
         #endregion Barycenter
 
         /// <summary>
+        /// Return if point is on a geometric shape
+        /// </summary>
+        /// <param name="shape">3d geometric shape</param>
+        /// <param name="point">3d point</param>
+        /// <param name="distanceTolerance">Is on the shape if distance is less than tolerance</param>
+        public static bool IsOn(I3dPointDistance<double> shape, I3dCartesianCoordinates<double> point, double distanceTolerance = 1e-6)
+        {
+            var distance = shape.Distance(point);
+            return distance < 0.0 ? false : distance <= distanceTolerance;
+        }
+
+        /// <summary>
         /// Return the addition: v1 + v2
         /// </summary>
         /// <param name="v1">3d vector</param>
@@ -283,6 +278,19 @@ namespace Core.Algorithm
         }
 
         /// <summary>
+        /// Return the cross product: v1 x v2
+        /// </summary>
+        /// <param name="v1">2d vector</param>
+        /// <param name="v2">2d vector</param>
+        public static I3dCartesianCoordinates<double> CrossProduct(I2dCartesianCoordinates<double> v1, I2dCartesianCoordinates<double> v2)
+        {
+            var Z = (v1.X * v2.Y) - (v1.Y * v2.X);
+            var p = new Point3d();
+            p.SetCartesian(0.0, 0.0, Z);
+            return p;
+        }
+
+        /// <summary>
         /// Dot product (scalar product)
         /// </summary>
         /// <param name="A">Vector</param>
@@ -291,14 +299,18 @@ namespace Core.Algorithm
         public static double DotProduct(IVector<double> A, IVector<double> B)
         {
             var length = Math.Max(A.Length, B.Length);
-            double r = 0, a, b;
+            double s1 = 0.0;
             for (int i = 0; i < length; ++i)
             {
-                a = (i < A.Length) ? A[i] : 0;
-                b = (i < B.Length) ? B[i] : 0;
-                r += a * b;
+                var a = (i < A.Length) ? A[i] : 0;
+                var b = (i < B.Length) ? B[i] : 0;
+                s1 += a * b;
             }
-            return r;
+#if DEBUG
+            //var s2 = (A.GetRowMatrix * B.GetColMatrix)[0, 0];
+            //var Zero = s1 - s2;
+#endif //DEBUG
+            return s1;
         }
 
         /// <summary>
@@ -327,14 +339,8 @@ namespace Core.Algorithm
                 case 2: O.SetCartesian(-V.Y, V.X, 0.0); break;
                 default: break;
             }
-            if (normalize)
-            {
-                var norm = Norm(O);
-                O.X /= norm;
-                O.Y /= norm;
-                O.Z /= norm;
-            }
             //Debug.Assert(Core.Mathematics.Utilities.Near(Vector3d.Angle(V, O).Get(Core.Angle.Unit.deg), 90.0, 1e-6));
+            if (normalize) return Normalize(O);
             return O;
         }
 
