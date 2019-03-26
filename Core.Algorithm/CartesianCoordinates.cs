@@ -338,14 +338,8 @@ namespace Core.Algorithm
                 case 2: O.SetCartesian(-V.Y, V.X, 0.0); break;
                 default: break;
             }
-            if (normalize)
-            {
-                var norm = Norm(O);
-                O.X /= norm;
-                O.Y /= norm;
-                O.Z /= norm;
-            }
             //Debug.Assert(Core.Mathematics.Utilities.Near(Vector3d.Angle(V, O).Get(Core.Angle.Unit.deg), 90.0, 1e-6));
+            if (normalize) return Normalize(O);
             return O;
         }
 
