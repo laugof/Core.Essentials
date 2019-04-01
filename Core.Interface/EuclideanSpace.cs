@@ -33,6 +33,11 @@ namespace Core.Interface
     public interface IEuclideanSpace
     {
         /// <summary>
+        /// Euclideanspace name
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Add a new frame (node) in the graph
         /// </summary>
         /// <param name="frame">IFrame</param>
