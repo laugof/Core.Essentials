@@ -56,9 +56,8 @@ namespace Core.Algorithm
         public static I3dCartesianCoordinates<double> Normalize(I3dCartesianCoordinates<double> v, double scalar = 1.0)
         {
             var norm = Norm(v);
-            var p = new Point3d();
-            if (norm > 0) p.SetCartesian(scalar * v.X / norm, scalar * v.Y / norm, scalar * v.Z / norm);
-            return p;
+            if (norm > 0) return new Point3d(scalar * v.X / norm, scalar * v.Y / norm, scalar * v.Z / norm);
+            else return new Point3d(0.0, 0.0, 0.0);
         }
 
         #endregion Norm
@@ -159,6 +158,15 @@ namespace Core.Algorithm
 
         internal class Point3d : I3dCartesianCoordinates<double>
         {
+            public Point3d(double x, double y, double z)
+            {
+                SetCartesian(x, y, z);
+            }
+            public Point3d(I3dCartesianCoordinates<double> coordinates)
+            {
+                SetCartesian(coordinates);
+            }
+
             public double X { get; set; }
             public double Y { get; set; }
             public double Z { get; set; }
@@ -204,7 +212,7 @@ namespace Core.Algorithm
         /// <returns>Center of gravity</returns>
         public static I3dCartesianCoordinates<double> Barycenter(List<I3dCartesianCoordinates<double>> pl)
         {
-            I3dCartesianCoordinates<double> CenterOfGravity = new Point3d();
+            I3dCartesianCoordinates<double> CenterOfGravity = new Point3d(0.0, 0.0, 0.0);
             foreach (var point in pl)
             {
                 CenterOfGravity.X += point.X;
@@ -242,7 +250,7 @@ namespace Core.Algorithm
         /// <param name="v2">3d vector</param>
         public static I3dCartesianCoordinates<double> Add(I3dCartesianCoordinates<double> v1, I3dCartesianCoordinates<double> v2)
         {
-            var p = new Point3d();
+            var p = new Point3d(0.0, 0.0, 0.0);
             p.SetCartesian(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
             return p;
         }
@@ -255,9 +263,7 @@ namespace Core.Algorithm
         /// <returns></returns>
         public static I3dCartesianCoordinates<double> Multiply(double scalar, I3dCartesianCoordinates<double> v)
         {
-            var p = new Point3d();
-            p.SetCartesian(scalar * v.X, scalar * v.Y, scalar * v.Z);
-            return p;
+            return new Point3d(scalar * v.X, scalar * v.Y, scalar * v.Z);
         }
 
         public static I3dCartesianCoordinates<double> Multiply(I3dCartesianCoordinates<double> v, double scalar) => Multiply(scalar, v);
@@ -272,9 +278,7 @@ namespace Core.Algorithm
             var X = (v1.Y * v2.Z) - (v1.Z * v2.Y);
             var Y = (v1.Z * v2.X) - (v1.X * v2.Z);
             var Z = (v1.X * v2.Y) - (v1.Y * v2.X);
-            var p = new Point3d();
-            p.SetCartesian(X, Y, Z);
-            return p;
+            return new Point3d(X, Y, Z);
         }
 
         /// <summary>
@@ -285,9 +289,7 @@ namespace Core.Algorithm
         public static I3dCartesianCoordinates<double> CrossProduct(I2dCartesianCoordinates<double> v1, I2dCartesianCoordinates<double> v2)
         {
             var Z = (v1.X * v2.Y) - (v1.Y * v2.X);
-            var p = new Point3d();
-            p.SetCartesian(0.0, 0.0, Z);
-            return p;
+            return new Point3d(0.0, 0.0, Z);
         }
 
         /// <summary>
@@ -328,7 +330,7 @@ namespace Core.Algorithm
         /// <param name="normalize">Normalize the orthogonal vector?</param>
         public static I3dCartesianCoordinates<double> Orthogonal(I3dCartesianCoordinates<double> V, bool normalize = true)
         {
-            var O = new Point3d();
+            var O = new Point3d(0.0, 0.0, 0.0);
             var i = 0;
             if (Math.Abs(V[1]) < Math.Abs(V[0])) i = 1;
             if (Math.Abs(V[2]) < Math.Abs(V[i])) i = 2;
