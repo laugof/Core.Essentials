@@ -75,7 +75,7 @@ namespace Core.Algorithm
             Debug.Assert(p1.Length == p2.Length);
             var distance2 = 0.0;
             var dimension = p1.Length;
-            if (p2.Length < dimension) dimension = p2.Length; // FIXME >
+            if (p2.Length < dimension) dimension = p2.Length;
             for (int i = 0; i < dimension; ++i)
             {
                 var a1 = i < p1.Length ? p1[i] : 0.0;
@@ -83,6 +83,7 @@ namespace Core.Algorithm
                 var x = a1 - a2;
                 distance2 += x * x;
             }
+            Debug.Assert(distance2 >= 0.0);
             return distance2;
         }
 
