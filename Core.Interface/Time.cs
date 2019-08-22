@@ -6,6 +6,6 @@
     /// </summary>
     public interface ITimestamped
     {
-        System.DateTime DateTime { get; set; }
+        System.DateTime DateTime { get; }
     }
 }
