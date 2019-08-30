@@ -211,7 +211,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="pl">point list</param>
         /// <returns>Center of gravity</returns>
-        public static I3dCartesianCoordinates<double> Barycenter(List<I3dCartesianCoordinates<double>> pl)
+        public static I3dCartesianCoordinates<double> Barycenter(I3dCartesianCoordinates<double>[] pl)
         {
             I3dCartesianCoordinates<double> CenterOfGravity = new Point3d(0.0, 0.0, 0.0);
             foreach (var point in pl)
@@ -220,9 +220,9 @@ namespace Core.Algorithm
                 CenterOfGravity.Y += point.Y;
                 CenterOfGravity.Z += point.Z;
             }
-            if (pl.Count > 0)
+            if (pl.Length > 0)
             {
-                var n = 1.0 / (double)pl.Count;
+                var n = 1.0 / (double)pl.Length;
                 CenterOfGravity.X *= n;
                 CenterOfGravity.Y *= n;
                 CenterOfGravity.Z *= n;
@@ -342,7 +342,7 @@ namespace Core.Algorithm
                 case 2: O.SetCartesian(-V.Y, V.X, 0.0); break;
                 default: break;
             }
-            //Debug.Assert(Core.Mathematics.Utilities.Near(Vector3d.Angle(V, O).Get(Core.Angle.Unit.deg), 90.0, 1e-6));
+            //Debug.Assert(Core.Algorithm.Mathematics.Near(Vector3d.Angle(V, O).Get(Angle.Unit.deg), 90.0, 1e-6));
             if (normalize) return Normalize(O);
             return O;
         }
