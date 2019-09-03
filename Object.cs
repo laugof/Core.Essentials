@@ -10,6 +10,15 @@ namespace Core.Interface
     {
         string Name { get; }
     }
+
+    /// <summary>
+    /// Author: Laurent Goffin
+    /// Scalar
+    /// </summary>
+    public interface IScalar
+    {
+        double Scalar { get; set; }
+    }
 }
 
 namespace Core
