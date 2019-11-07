@@ -344,7 +344,7 @@ namespace Core.Algorithm
                 s1 += a * b;
             }
 #if DEBUG
-            //var s2 = (A.GetRowMatrix * B.GetColMatrix)[0, 0];
+            //var s2 = (Matrix.GetRowMatrix(v1) * Matrix.GetColMatrix(v2))[0, 0];
             //var Zero = s1 - s2;
 #endif //DEBUG
             return s1;
