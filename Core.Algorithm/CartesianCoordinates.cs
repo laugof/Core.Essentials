@@ -272,7 +272,7 @@ namespace Core.Algorithm
         /// <param name="shape">3d geometric shape</param>
         /// <param name="point">3d point</param>
         /// <param name="distanceTolerance">Is on the shape if distance is less than tolerance</param>
-        public static bool IsOn(I3dPointDistance<double> shape, I3dCartesianCoordinates<double> point, double distanceTolerance = 1e-6)
+        public static bool IsOn(I3dPointDistance<double> shape, IPoint3d point, double distanceTolerance = 1e-6)
         {
             var distance = shape.Distance(point);
             return distance < 0.0 ? false : distance <= distanceTolerance;

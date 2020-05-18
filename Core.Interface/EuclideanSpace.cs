@@ -18,7 +18,7 @@ namespace Core.Interface
         /// <summary>
         /// 3d vector (X,Y,Z)
         /// </summary>
-        I3dCartesianCoordinates<double> TranslationVector { get; }
+        IVector3d TranslationVector { get; }
 
         /// <summary>
         /// Is the rigid matrix identity?
