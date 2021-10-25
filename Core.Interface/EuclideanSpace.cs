@@ -1,4 +1,7 @@
-﻿/// <summary>
+﻿using System;
+using System.Collections.Generic;
+
+/// <summary>
 /// Author: Laurent Goffin
 /// Generic interfaces for euclidean spaces and 3d rigid transformations between frames
 /// </summary>
@@ -38,6 +41,8 @@ namespace Core.Interface
         /// Euclideanspace name
         /// </summary>
         string Name { get; }
+
+        IEnumerable<IFrame> Frames { get; }
 
         /// <summary>
         /// Add a new frame (node) in the graph
@@ -123,5 +128,7 @@ namespace Core.Interface
     /// Reference frame interface
     /// </summary>
     public interface IFrame
-    { }
+    {
+        UInt64 Id { get; }
+    }
 }
