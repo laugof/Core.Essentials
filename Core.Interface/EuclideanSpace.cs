@@ -24,6 +24,8 @@ namespace Core.Interface
         /// Is the rigid matrix identity?
         /// </summary>
         bool IsIdentity();
+
+        IRigidMatrix Inverse();
     }
 
     /// <summary>
@@ -95,7 +97,7 @@ namespace Core.Interface
         /// <param name="origin">IFrame</param>
         /// <param name="target">IFrame</param>
         /// <param name="translation">Cartesian translation</param>
-        bool SetTranslation(IFrame origin, IFrame target, I3dCartesianCoordinates<double> translation);
+        bool Set(IFrame origin, IFrame target, IPoint3d translation);
 
         /// <summary>
         /// Get the IRigidMatrix of a connection (edge) between two frames (nodes):
