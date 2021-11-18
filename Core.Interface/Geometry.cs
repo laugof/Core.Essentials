@@ -13,7 +13,7 @@ namespace Core.Interface
 
     public interface IMesh
     {
-        List<I3dCartesianCoordinates<double>> Point3dList();
+        List<IPoint3d> Point3dList();
         List<Triangle> Triangles { get; }
         IPolygon Triangle3d(int i);
     }
