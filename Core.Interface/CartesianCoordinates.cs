@@ -55,7 +55,7 @@ namespace Core.Interface
     /// <summary>
     /// Distance with a 3d point IPoint3d
     /// </summary>
-    public interface I3dPointDistance<T>
+    public interface I3dPointDistance
     {
         double Distance(IPoint3d p);
     }
