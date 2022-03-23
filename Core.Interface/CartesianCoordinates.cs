@@ -55,14 +55,8 @@ namespace Core.Interface
     /// <summary>
     /// Distance with a 3d point
     /// </summary>
-    public interface I3dPointDistance<T>
+    public interface I3dPointDistance
     {
         double Distance(IPoint3d p);
     }
-
-    /// <summary>
-    /// 3d cartesian metric
-    /// </summary>
-    public interface I3dCartesianMetric<T> : I3dCartesianCoordinates<T>, I3dPointDistance<T>
-    { }
 }
