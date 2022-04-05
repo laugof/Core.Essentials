@@ -40,7 +40,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="point">Vector</param>
         /// <returns></returns>
-        public static I2dCartesianCoordinates<double> Normalize(I2dCartesianCoordinates<double> point, double scalar = 1.0)
+        public static IPoint2d Normalize(I2dCartesianCoordinates<double> point, double scalar = 1.0)
         {
             var norm = Norm(point);
             var p = new Point2d();
@@ -53,7 +53,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="point">Vector</param>
         /// <returns></returns>
-        public static I3dCartesianCoordinates<double> Normalize(I3dCartesianCoordinates<double> point, double scalar = 1.0)
+        public static IPoint3d Normalize(I3dCartesianCoordinates<double> point, double scalar = 1.0)
         {
             var norm = Norm(point);
             if (norm > 0) return new Point3d(scalar * point.X / norm, scalar * point.Y / norm, scalar * point.Z / norm);
@@ -144,7 +144,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="pl">point list</param>
         /// <returns>Center of gravity or null if pointlist is empty</returns>
-        public static I2dCartesianCoordinates<double> Barycenter(I2dCartesianCoordinates<double>[] pl)
+        public static IPoint2d Barycenter(I2dCartesianCoordinates<double>[] pl)
         {
             if (pl.Length < 1) return null;
             var barycenter = new Point2d(pl[0].X, pl[0].Y);
@@ -167,7 +167,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="pl">point list</param>
         /// <returns>Top-Left corner or null if pointlist is empty</returns>
-        public static I2dCartesianCoordinates<double> MinXY(I2dCartesianCoordinates<double>[] pl)
+        public static IPoint2d MinXY(I2dCartesianCoordinates<double>[] pl)
         {
             if (pl.Length < 1) return null;
             var min = new Point2d(pl[0].X, pl[0].Y);
@@ -184,7 +184,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="pl">point list</param>
         /// <returns>Bottom-Right corner or null if pointlist is empty</returns>
-        public static I2dCartesianCoordinates<double> MaxXY(I2dCartesianCoordinates<double>[] pl)
+        public static IPoint2d MaxXY(I2dCartesianCoordinates<double>[] pl)
         {
             if (pl.Length < 1) return null;
             var max = new Point2d(pl[0].X, pl[0].Y);
@@ -196,7 +196,7 @@ namespace Core.Algorithm
             return max;
         }
 
-        internal class Point3d : I3dCartesianCoordinates<double>
+        internal class Point3d : IPoint3d
         {
             public Point3d(double x = 0.0, double y = 0.0, double z = 0.0) { SetCartesian(x, y, z); }
 
@@ -245,7 +245,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="pl">point list</param>
         /// <returns>Center of gravity</returns>
-        public static I3dCartesianCoordinates<double> Barycenter(I3dCartesianCoordinates<double>[] pl)
+        public static IPoint3d Barycenter(I3dCartesianCoordinates<double>[] pl)
         {
             var CenterOfGravity = new Point3d();
             foreach (var point in pl)
@@ -283,7 +283,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="v1">3d vector</param>
         /// <param name="v2">3d vector</param>
-        public static I3dCartesianCoordinates<double> Add(I3dCartesianCoordinates<double> v1, I3dCartesianCoordinates<double> v2)
+        public static IPoint3d Add(I3dCartesianCoordinates<double> v1, I3dCartesianCoordinates<double> v2)
         {
             var p = new Point3d();
             p.SetCartesian(v1.X + v2.X, v1.Y + v2.Y, v1.Z + v2.Z);
@@ -296,19 +296,19 @@ namespace Core.Algorithm
         /// <param name="scalar">scalar</param>
         /// <param name="vector">Vector</param>
         /// <returns></returns>
-        public static I3dCartesianCoordinates<double> Multiply(double scalar, I3dCartesianCoordinates<double> vector)
+        public static IPoint3d Multiply(double scalar, I3dCartesianCoordinates<double> vector)
         {
             return new Point3d(scalar * vector.X, scalar * vector.Y, scalar * vector.Z);
         }
 
-        public static I3dCartesianCoordinates<double> Multiply(I3dCartesianCoordinates<double> vector, double scalar) => Multiply(scalar, vector);
+        public static IPoint3d Multiply(I3dCartesianCoordinates<double> vector, double scalar) => Multiply(scalar, vector);
 
         /// <summary>
         /// Return the cross product: v1 x v2
         /// </summary>
         /// <param name="v1">3d vector</param>
         /// <param name="v2">3d vector</param>
-        public static I3dCartesianCoordinates<double> CrossProduct(I3dCartesianCoordinates<double> v1, I3dCartesianCoordinates<double> v2)
+        public static IPoint3d CrossProduct(I3dCartesianCoordinates<double> v1, I3dCartesianCoordinates<double> v2)
         {
             var X = (v1.Y * v2.Z) - (v1.Z * v2.Y);
             var Y = (v1.Z * v2.X) - (v1.X * v2.Z);
@@ -321,7 +321,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="v1">2d vector</param>
         /// <param name="v2">2d vector</param>
-        public static I3dCartesianCoordinates<double> CrossProduct(I2dCartesianCoordinates<double> v1, I2dCartesianCoordinates<double> v2)
+        public static IPoint3d CrossProduct(I2dCartesianCoordinates<double> v1, I2dCartesianCoordinates<double> v2)
         {
             var Z = (v1.X * v2.Y) - (v1.Y * v2.X);
             return new Point3d(0.0, 0.0, Z);
@@ -363,7 +363,7 @@ namespace Core.Algorithm
         /// </summary>
         /// <param name="vector">Vector 3d</param>
         /// <param name="normalize">Normalize the orthogonal vector?</param>
-        public static I3dCartesianCoordinates<double> Orthogonal(I3dCartesianCoordinates<double> vector, bool normalize = true)
+        public static IPoint3d Orthogonal(I3dCartesianCoordinates<double> vector, bool normalize = true)
         {
             var O = new Point3d();
             var i = 0;
